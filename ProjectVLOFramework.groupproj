@@ -1,0 +1,86 @@
+﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+		<PropertyGroup>
+			<ProjectGuid>{ace23427-6484-453f-8b5b-ae13c364b6ba}</ProjectGuid>
+		</PropertyGroup>
+		<ItemGroup>
+			<Projects Include="Citect Genies Scanner\ThundaxGeniesScanner.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="test Framework\TestFramework.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="Thundax Box Manager\ThundaxBoxManager.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="plugin Framework\VLOFramework.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="test Component\ProjectTestCanvas.dproj">
+				<Dependencies/>
+			</Projects>
+		</ItemGroup>
+		<ProjectExtensions>
+			<Borland.Personality>Default.Personality.12</Borland.Personality>
+			<Borland.ProjectType/>
+			<BorlandProject>
+				<BorlandProject>
+					<Default.Personality/>
+				</BorlandProject>
+			</BorlandProject>
+		</ProjectExtensions>
+		<Target Name="ThundaxGeniesScanner">
+			<MSBuild Projects="Citect Genies Scanner\ThundaxGeniesScanner.dproj"/>
+		</Target>
+		<Target Name="ThundaxGeniesScanner:Clean">
+			<MSBuild Targets="Clean" Projects="Citect Genies Scanner\ThundaxGeniesScanner.dproj"/>
+		</Target>
+		<Target Name="ThundaxGeniesScanner:Make">
+			<MSBuild Targets="Make" Projects="Citect Genies Scanner\ThundaxGeniesScanner.dproj"/>
+		</Target>
+		<Target Name="TestFramework">
+			<MSBuild Projects="test Framework\TestFramework.dproj"/>
+		</Target>
+		<Target Name="TestFramework:Clean">
+			<MSBuild Targets="Clean" Projects="test Framework\TestFramework.dproj"/>
+		</Target>
+		<Target Name="TestFramework:Make">
+			<MSBuild Targets="Make" Projects="test Framework\TestFramework.dproj"/>
+		</Target>
+		<Target Name="ThundaxBoxManager">
+			<MSBuild Projects="Thundax Box Manager\ThundaxBoxManager.dproj"/>
+		</Target>
+		<Target Name="ThundaxBoxManager:Clean">
+			<MSBuild Targets="Clean" Projects="Thundax Box Manager\ThundaxBoxManager.dproj"/>
+		</Target>
+		<Target Name="ThundaxBoxManager:Make">
+			<MSBuild Targets="Make" Projects="Thundax Box Manager\ThundaxBoxManager.dproj"/>
+		</Target>
+		<Target Name="VLOFramework">
+			<MSBuild Projects="plugin Framework\VLOFramework.dproj"/>
+		</Target>
+		<Target Name="VLOFramework:Clean">
+			<MSBuild Targets="Clean" Projects="plugin Framework\VLOFramework.dproj"/>
+		</Target>
+		<Target Name="VLOFramework:Make">
+			<MSBuild Targets="Make" Projects="plugin Framework\VLOFramework.dproj"/>
+		</Target>
+		<Target Name="ProjectTestCanvas">
+			<MSBuild Projects="test Component\ProjectTestCanvas.dproj"/>
+		</Target>
+		<Target Name="ProjectTestCanvas:Clean">
+			<MSBuild Targets="Clean" Projects="test Component\ProjectTestCanvas.dproj"/>
+		</Target>
+		<Target Name="ProjectTestCanvas:Make">
+			<MSBuild Targets="Make" Projects="test Component\ProjectTestCanvas.dproj"/>
+		</Target>
+		<Target Name="Build">
+			<CallTarget Targets="ThundaxGeniesScanner;TestFramework;ThundaxBoxManager;VLOFramework;ProjectTestCanvas"/>
+		</Target>
+		<Target Name="Clean">
+			<CallTarget Targets="ThundaxGeniesScanner:Clean;TestFramework:Clean;ThundaxBoxManager:Clean;VLOFramework:Clean;ProjectTestCanvas:Clean"/>
+		</Target>
+		<Target Name="Make">
+			<CallTarget Targets="ThundaxGeniesScanner:Make;TestFramework:Make;ThundaxBoxManager:Make;VLOFramework:Make;ProjectTestCanvas:Make"/>
+		</Target>
+		<Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+	</Project>
