@@ -1,10 +1,28 @@
-unit frmLayout;
+(*
+ *  This file is part of Thundax P-Zaggy
+ *
+ *  Thundax P-Zaggy is a free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Thundax P-Zaggy is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with VLO Framework.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *  Copyright     2008,2010     Jordi Coll Corbilla
+ *)
+ unit frmLayout;
 
 interface
 
 uses
     Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-    Dialogs, StdCtrls, uLayout;
+    Dialogs, StdCtrls, uLayout, Buttons;
 
 type
     TfLayout = class(TForm)
@@ -33,12 +51,12 @@ type
         maxSpeed: TEdit;
         MaxSteps: TEdit;
         Label11: TLabel;
-        Button1: TButton;
-        Button2: TButton;
         chkStop: TCheckBox;
-        Button3: TButton;
         chkEnergy: TCheckBox;
         chkCenter: TCheckBox;
+    SpeedButton3: TSpeedButton;
+    SpeedButton4: TSpeedButton;
+    SpeedButton1: TSpeedButton;
         procedure FormShow(Sender: TObject);
         procedure Button2Click(Sender: TObject);
         procedure Button1Click(Sender: TObject);

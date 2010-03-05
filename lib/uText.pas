@@ -1,3 +1,22 @@
+(*
+ *  This file is part of VLO Framework
+ *
+ *  VLO Framework is free development platform software:
+ *  you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  VLO Framework is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with VLO Framework.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *  Copyright     2008,2010     Jordi Coll Corbilla
+ *)
 unit uText;
 
 interface
@@ -5,7 +24,7 @@ interface
 uses
     Graphics, Types, Windows, ExtCtrls, Math;
 
-procedure DrawTextOrientation(canvas: TCanvas; position: TPoint; epsilon: integer; font: TFont; text: string);
+procedure DrawTextOrientation(canvas: TCanvas; position: TPoint; epsilon: integer; font: TFont; text: string; ExistImage : Boolean; ifImageColor : TColor);
 procedure GradienteVertical(image: TImage; ColorOrigen, ColorDestino: TColor);
 
 implementation
@@ -13,7 +32,7 @@ implementation
 uses
     uZoom;
 
-procedure DrawTextOrientation(canvas: TCanvas; position: TPoint; epsilon: integer; font: TFont; text: string);
+procedure DrawTextOrientation(canvas: TCanvas; position: TPoint; epsilon: integer; font: TFont; text: string; ExistImage : Boolean; ifImageColor : TColor);
     function iif(condition: boolean; resultTrue: integer; resultFalse: integer): integer;
     begin
         result := resultFalse;
@@ -44,7 +63,10 @@ begin
         FF_DONTCARE,
         PChar(font.Name));
 
-    canvas.font.color := font.color;
+    if ExistImage then
+        canvas.Font.Color := ifImageColor
+    else
+        canvas.font.color := font.color;
     FontSelected := SelectObject(canvas.handle, newFont);
     TextOut(canvas.handle, position.x, position.y, PChar(text), length(text));
     SelectObject(canvas.handle, FontSelected);

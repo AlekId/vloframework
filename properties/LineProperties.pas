@@ -1,10 +1,28 @@
-unit LineProperties;
+(*
+ *  This file is part of Thundax P-Zaggy
+ *
+ *  Thundax P-Zaggy is a free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Thundax P-Zaggy is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with VLO Framework.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *  Copyright     2008,2010     Jordi Coll Corbilla
+ *)
+ unit LineProperties;
 
 interface
 
 uses
     Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-    Dialogs, StdCtrls, ExtCtrls, Spin, uLines;
+    Dialogs, StdCtrls, ExtCtrls, Spin, uEdges, Buttons;
 
 type
     TfrmLineProp = class(TForm)
@@ -38,13 +56,14 @@ type
         Button3: TButton;
         Memo1: TMemo;
         FontDialog1: TFontDialog;
-        Button1: TButton;
-        Button2: TButton;
         rbNoArrow: TRadioButton;
         penwidth: TSpinEdit;
         Label6: TLabel;
         Label7: TLabel;
         arrowAngle: TSpinEdit;
+        lClassname: TLabel;
+        SpeedButton3: TSpeedButton;
+        SpeedButton4: TSpeedButton;
         procedure FormCreate(Sender: TObject);
         procedure FormShow(Sender: TObject);
         procedure Button3Click(Sender: TObject);
@@ -64,7 +83,7 @@ var
 implementation
 
 uses
-    uText, uLinesAdapter;
+    uText, uEdgesAdapter, uFonts;
 {$R *.dfm}
 
 procedure TfrmLineProp.Button1Click(Sender: TObject);
@@ -79,10 +98,7 @@ begin
     if rbFashionArrow.Checked then
         line.ArrowKind := Fashion;
     line.Properties.Description.Text := Memo1.lines.Text;
-    line.Properties.fontText.Name := textfont.name;
-    line.Properties.fontText.Size := textfont.Size;
-    line.Properties.fontText.Style := textfont.Style;
-    line.Properties.fontText.Color := textfont.Color;
+    line.Properties.AssignText(textfont);
     line.Properties.penwidth := penwidth.Value;
     line.Properties.InclinationAngle := arrowAngle.Value;
 
@@ -115,18 +131,12 @@ end;
 
 procedure TfrmLineProp.Button3Click(Sender: TObject);
 begin
-    FontDialog1.Font.Name := line.Properties.fontText.Name;
-    FontDialog1.Font.Size := line.Properties.fontText.Size;
-    FontDialog1.Font.Style := line.Properties.fontText.Style;
-    FontDialog1.Font.Color := line.Properties.fontText.Color;
+    AssignDialogFont(FontDialog1, line.Properties.fontText);
     with FontDialog1 do
         if Execute then
         begin
-            textfont.Name := Font.name;
-            textfont.Size := Font.Size;
-            textfont.Style := Font.Style;
-            textfont.Color := Font.Color;
-            edFont.Text := textfont.Name;
+            AssignFont(textfont, Font);
+            AssignEditFont(edFont, textfont);
         end;
 end;
 
@@ -146,7 +156,7 @@ begin
     ft.Size := 12;
     ft.Style := ft.Style + [fsBold];
     sizeText := Image2.Canvas.textWidth('Edge Properties ' + line.Id);
-    DrawTextOrientation(Image2.Canvas, Point(1, 235 + (sizeText div 2)), 90, ft, 'Edge Properties ' + line.Id);
+    DrawTextOrientation(Image2.Canvas, Point(1, 235 + (sizeText div 2)), 90, ft, 'Edge Properties ' + line.Id, false, clwhite);
     ft.free;
 
     spArrowLength.Value := line.Properties.LenArrow;
@@ -171,8 +181,9 @@ begin
     if (line is TAbstractSimpleDoubleArrowEdge) or (line is TAbstractDottedDoubleArrowEdge) then
         rbDobleArrow.Checked := true;
 
+    lClassname.Caption := line.ClassName;
     Memo1.lines.Text := line.Properties.Description.Text;
-    edFont.Text := line.Properties.fontText.Name;
+    AssignEditFont(edFont, line.Properties.fontText);
     textfont := line.Properties.fontText;
     penwidth.Value := line.Properties.penwidth;
     arrowAngle.Value := line.Properties.InclinationAngle;

@@ -1,9 +1,28 @@
+(*
+ *  This file is part of VLO Framework
+ *
+ *  VLO Framework is free development platform software:
+ *  you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  VLO Framework is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with VLO Framework.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *  Copyright     2008,2010     Jordi Coll Corbilla
+ *)
 unit uRoutes;
 
 interface
 
 uses
-    StdCtrls, uArray;
+    StdCtrls, uArray, uLog;
 
 type
     TNode = record
@@ -28,7 +47,7 @@ function isVisited(AdjacentList: TAdjacentArray; source: integer; destiny: integ
 function getPes(AdjacentList: TAdjacentArray; source: integer): integer;
 procedure Visit(AdjacentList: TAdjacentArray; source: integer; destiny: integer);
 function ExamineNodes2(memo1: TMemo; firstNode: integer; lastNode: integer; AdjacentList: TAdjacentArray): string;
-procedure PrintAdjacentList(memo1: TMemo; AdjacentList: TAdjacentArray);
+procedure PrintAdjacentList(FLog : TLogObject; AdjacentList: TAdjacentArray);
 procedure GetOrderedList(var lista: TAdjacentArray);
 function GetInterlockList(Interlocklist: TAdjacentArray; id: integer): TArrayInteger;
 procedure SetCheckArrayValue(var a: TArrayInteger; valor: integer);
@@ -238,15 +257,13 @@ begin
     result := result + val + ' ';
 end;
 
-procedure PrintAdjacentList(memo1: TMemo; AdjacentList: TAdjacentArray);
+procedure PrintAdjacentList(FLog : TLogObject; AdjacentList: TAdjacentArray);
 var
     i: integer;
 begin
     for i := 0 to length(AdjacentList) - 1 do
     begin
-        //        memo1.lines.add('Source ' + Inttostr(AdjacentList[i].source) + ' Destiny ' + Inttostr(AdjacentList[i].destiny) + ' Weight ' + Inttostr(AdjacentList[i].pes) + ' unique ' + booltostr
-        //                (AdjacentList[i].brother));
-        memo1.lines.add('Source ' + Inttostr(AdjacentList[i].source) + ' Destiny ' + Inttostr(AdjacentList[i].destiny) + ' isSource ' + BoolToStr(AdjacentList[i].isSource) + ' isDestination ' + booltostr
+        FLog.add('Source ' + Inttostr(AdjacentList[i].source) + ' Destiny ' + Inttostr(AdjacentList[i].destiny) + ' isSource ' + BoolToStr(AdjacentList[i].isSource) + ' isDestination ' + booltostr
             (AdjacentList[i].isDestination));
     end;
 end;

@@ -1,3 +1,22 @@
+(*
+ *  This file is part of VLO Framework
+ *
+ *  VLO Framework is free development platform software:
+ *  you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  VLO Framework is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with VLO Framework.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *  Copyright     2008,2010     Jordi Coll Corbilla
+ *)
 unit uProperties;
 
 interface
@@ -35,6 +54,7 @@ type
         procedure Assign(obj: TObject); virtual;
         function getText(): string;
         constructor Create();
+        procedure AssignText(FontText : TFont);
         destructor Destroy(); override;
     end;
 
@@ -57,9 +77,12 @@ type
     TNodeProperty = class(TAbstractProperty)
     private
         FzOrder: integer;
+        FColorifImage: TColor;
         procedure SetzOrder(const Value: integer);
+        procedure SetColorifImage(const Value: TColor);
     public
         property zOrder: integer read FzOrder write SetzOrder;
+        property ColorifImage: TColor read FColorifImage write SetColorifImage;
         function MarshalToXML(XMLDoc: IXMLDocument; iXMLRootNode: IXMLNode; sNode: string): IXMLNode; override;
         function UnMarshalFromXML(XMLDoc: IXMLDocument; iXMLRootNode: IXMLNode; sNode: string): IXMLNode; override;
         procedure Assign(obj: TObject); override;
@@ -90,6 +113,14 @@ begin
     if Self.FDescription.Text = '' then
         Self.FDescription.Text := absObj.Description.Text;
     Self.FpenWidth := absObj.penWidth;
+end;
+
+procedure TAbstractProperty.AssignText(FontText: TFont);
+begin
+    Self.FFontText.Name := FontText.name;
+    Self.FFontText.Size := FontText.Size;
+    Self.FFontText.Style := FontText.Style;
+    Self.FFontText.Color := FontText.Color;
 end;
 
 constructor TAbstractProperty.Create;
@@ -240,7 +271,10 @@ begin
     begin
         absObj := (obj as TNodeProperty);
         if absObj <> nil then
+        begin
             Self.FzOrder := absObj.zOrder;
+            Self.FColorifImage := absObj.FColorifImage;
+        end;
     end;
 end;
 
@@ -259,7 +293,13 @@ end;
 function TNodeProperty.MarshalToXML(XMLDoc: IXMLDocument; iXMLRootNode: IXMLNode; sNode: string): IXMLNode;
 begin
     iXMLRootNode.attributes['FzOrder'] := IntToStr(Self.FzOrder);
+    iXMLRootNode.attributes['FColorifImage'] := IntToStr(Self.FColorifImage);
     inherited MarshalToXML(XMLDoc, iXMLRootNode, sNode);
+end;
+
+procedure TNodeProperty.SetColorifImage(const Value: TColor);
+begin
+    FColorifImage := Value;
 end;
 
 procedure TNodeProperty.SetzOrder(const Value: integer);
@@ -270,6 +310,11 @@ end;
 function TNodeProperty.UnMarshalFromXML(XMLDoc: IXMLDocument; iXMLRootNode: IXMLNode; sNode: string): IXMLNode;
 begin
     Self.FzOrder := StrToInt(iXMLRootNode.attributes['FzOrder']);
+    try
+        Self.FColorifImage := StrToInt(iXMLRootNode.attributes['FColorifImage']);
+    except
+        Self.FColorifImage := clWhite;
+    end;
     inherited UnMarshalFromXML(XMLDoc, iXMLRootNode, sNode);
 end;
 

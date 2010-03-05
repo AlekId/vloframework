@@ -1,3 +1,22 @@
+(*
+ *  This file is part of VLO Framework
+ *
+ *  VLO Framework is free development platform software:
+ *  you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  VLO Framework is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with VLO Framework.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *  Copyright     2008,2010     Jordi Coll Corbilla
+ *)
 unit uXMLSerializer;
 
 interface
@@ -12,8 +31,8 @@ type
         function UnMarshalFromXML(XMLDoc: IXMLDocument; iXMLRootNode: IXMLNode; sNode: string): IXMLNode;
     end;
 
-function FontSerializer(objFont: TFont; XMLDoc: IXMLDocument; iXMLRootNode: IXMLNode; sNode: string): IXMLNode;
-function FontDeserializer(objFont: TFont; XMLDoc: IXMLDocument; iXMLRootNode: IXMLNode; sNode: string): IXMLNode;
+function FontSerializer(objFont: TFont; XMLDoc: IXMLDocument; iXMLRootNode: IXMLNode; sNode: string): IXMLNode; overload;
+function FontDeserializer(objFont: TFont; XMLDoc: IXMLDocument; iXMLRootNode: IXMLNode; sNode: string): IXMLNode; overload;
 
 implementation
 
@@ -24,9 +43,10 @@ function FontSerializer(objFont: TFont; XMLDoc: IXMLDocument; iXMLRootNode: IXML
     function iif(condition: boolean; resultTrue: integer; resultFalse: integer): integer;
     begin
         result := resultFalse;
-        if Condition then
+        if condition then
             result := resultTrue
     end;
+
 begin
 
     iXMLRootNode.attributes['Name'] := objFont.Name;

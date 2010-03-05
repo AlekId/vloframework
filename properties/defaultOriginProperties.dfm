@@ -1,10 +1,10 @@
-object frmDefault: TfrmDefault
+object frmOriginProperties: TfrmOriginProperties
   Left = 0
   Top = 0
-  BorderStyle = bsToolWindow
-  Caption = 'Default node and edge properties'
-  ClientHeight = 347
-  ClientWidth = 390
+  BorderStyle = bsSizeToolWin
+  Caption = 'Default origin, destiny and link node properties'
+  ClientHeight = 322
+  ClientWidth = 561
   Color = clWhite
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,114 +17,180 @@ object frmDefault: TfrmDefault
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
+  object Image2: TImage
+    Left = 0
+    Top = 0
+    Width = 17
+    Height = 322
+    Align = alLeft
+    ExplicitTop = -30
+    ExplicitHeight = 323
+  end
+  object imgBox1: TImage
+    Left = 23
+    Top = 19
+    Width = 175
+    Height = 121
+  end
   object Label6: TLabel
     Left = 20
-    Top = 133
+    Top = 149
     Width = 51
     Height = 13
     Caption = 'Pen width:'
   end
   object Label2: TLabel
     Left = 20
-    Top = 156
+    Top = 172
     Width = 50
     Height = 13
     Caption = 'Box Color:'
   end
   object Label3: TLabel
     Left = 20
-    Top = 180
+    Top = 196
     Width = 51
     Height = 13
     Caption = 'Line Color:'
   end
   object Label4: TLabel
     Left = 20
-    Top = 204
+    Top = 220
     Width = 73
     Height = 13
     Caption = 'Selected Color:'
   end
-  object imgBox: TImage
-    Left = 20
-    Top = 3
+  object imgBox2: TImage
+    Left = 201
+    Top = 19
     Width = 175
     Height = 121
   end
   object Label1: TLabel
-    Left = 209
-    Top = 134
-    Width = 69
-    Height = 13
-    Caption = 'Arrow Length:'
-  end
-  object Label5: TLabel
-    Left = 209
-    Top = 156
+    Left = 201
+    Top = 149
     Width = 51
     Height = 13
     Caption = 'Pen width:'
   end
-  object Label7: TLabel
-    Left = 209
-    Top = 179
-    Width = 63
+  object Label5: TLabel
+    Left = 201
+    Top = 172
+    Width = 50
     Height = 13
-    Caption = 'Arrow Angle:'
+    Caption = 'Box Color:'
   end
-  object Label8: TLabel
-    Left = 209
-    Top = 203
+  object Label7: TLabel
+    Left = 201
+    Top = 196
     Width = 51
     Height = 13
     Caption = 'Line Color:'
   end
-  object Label9: TLabel
-    Left = 209
-    Top = 275
-    Width = 44
-    Height = 13
-    Caption = 'Fill Color:'
-  end
-  object Label10: TLabel
-    Left = 209
-    Top = 299
+  object Label8: TLabel
+    Left = 201
+    Top = 220
     Width = 73
     Height = 13
     Caption = 'Selected Color:'
   end
-  object imgLine: TImage
-    Left = 208
-    Top = 3
-    Width = 179
+  object imgBox3: TImage
+    Left = 382
+    Top = 19
+    Width = 175
     Height = 121
   end
-  object Image2: TImage
-    Left = 0
-    Top = 0
-    Width = 17
-    Height = 347
-    Align = alLeft
-    ExplicitTop = 32
-    ExplicitHeight = 306
+  object Label9: TLabel
+    Left = 382
+    Top = 149
+    Width = 51
+    Height = 13
+    Caption = 'Pen width:'
+  end
+  object Label10: TLabel
+    Left = 382
+    Top = 172
+    Width = 50
+    Height = 13
+    Caption = 'Box Color:'
+  end
+  object Label11: TLabel
+    Left = 382
+    Top = 196
+    Width = 51
+    Height = 13
+    Caption = 'Line Color:'
+  end
+  object Label12: TLabel
+    Left = 382
+    Top = 220
+    Width = 73
+    Height = 13
+    Caption = 'Selected Color:'
   end
   object Label13: TLabel
     Left = 20
-    Top = 251
+    Top = 265
     Width = 26
     Height = 13
     Caption = 'Font:'
   end
-  object Label11: TLabel
-    Left = 209
-    Top = 228
+  object Label14: TLabel
+    Left = 24
+    Top = 2
+    Width = 67
+    Height = 13
+    Caption = 'Origin Node:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label15: TLabel
+    Left = 204
+    Top = 2
+    Width = 77
+    Height = 13
+    Caption = 'Destiny Node:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label16: TLabel
+    Left = 385
+    Top = 2
+    Width = 57
+    Height = 13
+    Caption = 'Link Node:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label17: TLabel
+    Left = 201
+    Top = 265
+    Width = 26
+    Height = 13
+    Caption = 'Font:'
+  end
+  object Label18: TLabel
+    Left = 382
+    Top = 265
     Width = 26
     Height = 13
     Caption = 'Font:'
   end
   object SpeedButton3: TSpeedButton
-    Left = 208
-    Top = 322
+    Left = 381
+    Top = 297
     Width = 84
     Height = 22
     Caption = 'Save'
@@ -158,8 +224,8 @@ object frmDefault: TfrmDefault
     OnClick = Button1Click
   end
   object SpeedButton4: TSpeedButton
-    Left = 299
-    Top = 322
+    Left = 471
+    Top = 297
     Width = 86
     Height = 22
     Caption = 'Cancel'
@@ -193,8 +259,8 @@ object frmDefault: TfrmDefault
     OnClick = Button2Click
   end
   object Label19: TLabel
-    Left = 20
-    Top = 227
+    Left = 21
+    Top = 242
     Width = 71
     Height = 13
     Caption = 'Color if Image:'
@@ -205,116 +271,35 @@ object frmDefault: TfrmDefault
     Font.Style = []
     ParentFont = False
   end
-  object penWidth: TSpinEdit
-    Left = 98
-    Top = 130
-    Width = 97
-    Height = 22
-    MaxValue = 10
-    MinValue = 1
-    TabOrder = 0
-    Value = 1
-    OnChange = penWidthChange
+  object Label20: TLabel
+    Left = 201
+    Top = 242
+    Width = 71
+    Height = 13
+    Caption = 'Color if Image:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
   end
-  object cbBoxColor: TColorBox
-    Left = 98
-    Top = 153
-    Width = 97
-    Height = 22
-    Style = [cbStandardColors, cbExtendedColors, cbCustomColor, cbCustomColors]
-    TabOrder = 1
-    OnChange = cbBoxColorChange
-  end
-  object cbLineColor: TColorBox
-    Left = 98
-    Top = 177
-    Width = 97
-    Height = 22
-    Style = [cbStandardColors, cbExtendedColors, cbCustomColor, cbCustomColors]
-    TabOrder = 2
-    OnChange = cbBoxColorChange
-  end
-  object cbSelectedColor: TColorBox
-    Left = 98
-    Top = 201
-    Width = 97
-    Height = 22
-    Style = [cbStandardColors, cbExtendedColors, cbCustomColor, cbCustomColors]
-    TabOrder = 3
-    OnChange = cbBoxColorChange
-  end
-  object spArrowLength: TSpinEdit
-    Left = 287
-    Top = 130
-    Width = 100
-    Height = 22
-    MaxValue = 0
-    MinValue = 0
-    TabOrder = 7
-    Value = 0
-    OnChange = penWidthChange
-  end
-  object spPenWidth: TSpinEdit
-    Left = 287
-    Top = 153
-    Width = 100
-    Height = 22
-    MaxValue = 10
-    MinValue = 1
-    TabOrder = 8
-    Value = 1
-    OnChange = penWidthChange
-  end
-  object arrowAngle: TSpinEdit
-    Left = 287
-    Top = 176
-    Width = 100
-    Height = 22
-    MaxValue = 50
-    MinValue = 10
-    TabOrder = 9
-    Value = 10
-    OnChange = penWidthChange
-  end
-  object ColorBox1: TColorBox
-    Left = 287
-    Top = 200
-    Width = 100
-    Height = 22
-    Style = [cbStandardColors, cbExtendedColors, cbCustomColor, cbCustomColors]
-    TabOrder = 10
-    OnChange = cbBoxColorChange
-  end
-  object chkFilled: TCheckBox
-    Left = 209
-    Top = 251
-    Width = 97
-    Height = 17
-    Caption = 'Filled'
-    TabOrder = 13
-    OnClick = chkFilledClick
-  end
-  object cbFillColor: TColorBox
-    Left = 287
-    Top = 272
-    Width = 100
-    Height = 22
-    Style = [cbStandardColors, cbExtendedColors, cbCustomColor, cbCustomColors]
-    TabOrder = 14
-    OnChange = cbBoxColorChange
-  end
-  object ColorBox2: TColorBox
-    Left = 287
-    Top = 296
-    Width = 100
-    Height = 22
-    Style = [cbStandardColors, cbExtendedColors, cbCustomColor, cbCustomColors]
-    TabOrder = 15
-    OnChange = cbBoxColorChange
+  object Label21: TLabel
+    Left = 382
+    Top = 242
+    Width = 71
+    Height = 13
+    Caption = 'Color if Image:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
   end
   object edFont1: TEdit
     Left = 98
-    Top = 248
+    Top = 262
     Width = 97
     Height = 21
     Color = clSilver
@@ -322,9 +307,123 @@ object frmDefault: TfrmDefault
     TabOrder = 5
     Text = 'edFont1'
   end
+  object penWidth1: TSpinEdit
+    Left = 98
+    Top = 146
+    Width = 97
+    Height = 22
+    MaxValue = 10
+    MinValue = 1
+    TabOrder = 0
+    Value = 1
+    OnChange = penWidth1Change
+  end
+  object cbBoxColor1: TColorBox
+    Left = 98
+    Top = 169
+    Width = 97
+    Height = 22
+    Style = [cbStandardColors, cbExtendedColors, cbCustomColor, cbCustomColors]
+    TabOrder = 1
+    OnChange = cbBoxColor1Change
+  end
+  object cbLineColor1: TColorBox
+    Left = 98
+    Top = 193
+    Width = 97
+    Height = 22
+    Style = [cbStandardColors, cbExtendedColors, cbCustomColor, cbCustomColors]
+    TabOrder = 2
+    OnChange = cbBoxColor1Change
+  end
+  object cbSelectedColor1: TColorBox
+    Left = 98
+    Top = 217
+    Width = 97
+    Height = 22
+    Style = [cbStandardColors, cbExtendedColors, cbCustomColor, cbCustomColors]
+    TabOrder = 3
+    OnChange = cbBoxColor1Change
+  end
+  object penWidth2: TSpinEdit
+    Left = 279
+    Top = 146
+    Width = 97
+    Height = 22
+    MaxValue = 10
+    MinValue = 1
+    TabOrder = 7
+    Value = 1
+    OnChange = penWidth1Change
+  end
+  object cbBoxColor2: TColorBox
+    Left = 279
+    Top = 169
+    Width = 97
+    Height = 22
+    Style = [cbStandardColors, cbExtendedColors, cbCustomColor, cbCustomColors]
+    TabOrder = 8
+    OnChange = cbBoxColor1Change
+  end
+  object cbLineColor2: TColorBox
+    Left = 279
+    Top = 193
+    Width = 97
+    Height = 22
+    Style = [cbStandardColors, cbExtendedColors, cbCustomColor, cbCustomColors]
+    TabOrder = 9
+    OnChange = cbBoxColor1Change
+  end
+  object cbSelectedColor2: TColorBox
+    Left = 279
+    Top = 217
+    Width = 97
+    Height = 22
+    Style = [cbStandardColors, cbExtendedColors, cbCustomColor, cbCustomColors]
+    TabOrder = 10
+    OnChange = cbBoxColor1Change
+  end
+  object penWidth3: TSpinEdit
+    Left = 460
+    Top = 146
+    Width = 97
+    Height = 22
+    MaxValue = 10
+    MinValue = 1
+    TabOrder = 14
+    Value = 1
+    OnChange = penWidth1Change
+  end
+  object cbBoxColor3: TColorBox
+    Left = 460
+    Top = 169
+    Width = 97
+    Height = 22
+    Style = [cbStandardColors, cbExtendedColors, cbCustomColor, cbCustomColors]
+    TabOrder = 15
+    OnChange = cbBoxColor1Change
+  end
+  object cbLineColor3: TColorBox
+    Left = 460
+    Top = 193
+    Width = 97
+    Height = 22
+    Style = [cbStandardColors, cbExtendedColors, cbCustomColor, cbCustomColors]
+    TabOrder = 16
+    OnChange = cbBoxColor1Change
+  end
+  object cbSelectedColor3: TColorBox
+    Left = 460
+    Top = 217
+    Width = 97
+    Height = 22
+    Style = [cbStandardColors, cbExtendedColors, cbCustomColor, cbCustomColors]
+    TabOrder = 17
+    OnChange = cbBoxColor1Change
+  end
   object Button3: TButton
     Left = 175
-    Top = 250
+    Top = 264
     Width = 18
     Height = 18
     Caption = '...'
@@ -332,32 +431,69 @@ object frmDefault: TfrmDefault
     OnClick = Button3Click
   end
   object edFont2: TEdit
-    Left = 287
-    Top = 225
-    Width = 100
+    Left = 279
+    Top = 262
+    Width = 97
     Height = 21
     Color = clSilver
     ReadOnly = True
-    TabOrder = 11
-    Text = 'edFont1'
+    TabOrder = 12
+    Text = 'edFont'
+  end
+  object edFont3: TEdit
+    Left = 460
+    Top = 262
+    Width = 97
+    Height = 21
+    Color = clSilver
+    ReadOnly = True
+    TabOrder = 19
+    Text = 'edFont'
   end
   object Button4: TButton
-    Left = 367
-    Top = 227
+    Left = 357
+    Top = 263
     Width = 18
     Height = 18
     Caption = '...'
-    TabOrder = 12
+    TabOrder = 13
     OnClick = Button4Click
   end
-  object cbColorIfImage: TColorBox
+  object Button5: TButton
+    Left = 538
+    Top = 263
+    Width = 18
+    Height = 18
+    Caption = '...'
+    TabOrder = 20
+    OnClick = Button5Click
+  end
+  object cbColorIfImage1: TColorBox
     Left = 98
-    Top = 224
-    Width = 96
+    Top = 239
+    Width = 97
     Height = 22
     Style = [cbStandardColors, cbExtendedColors, cbCustomColor, cbCustomColors]
     TabOrder = 4
-    OnChange = cbBoxColorChange
+    OnChange = cbBoxColor1Change
+  end
+  object cbColorIfImage2: TColorBox
+    Left = 279
+    Top = 239
+    Width = 97
+    Height = 22
+    Style = [cbStandardColors, cbExtendedColors, cbCustomColor, cbCustomColors]
+    TabOrder = 11
+    OnChange = cbBoxColor1Change
+  end
+  object cbColorIfImage3: TColorBox
+    Left = 460
+    Top = 239
+    Width = 97
+    Height = 22
+    Style = [cbStandardColors, cbExtendedColors, cbCustomColor, cbCustomColors]
+    TabOrder = 18
+    OnChange = cbBoxColor1Change
   end
   object FontDialog1: TFontDialog
     Font.Charset = DEFAULT_CHARSET
@@ -365,7 +501,7 @@ object frmDefault: TfrmDefault
     Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = []
-    Left = 299
-    Top = 29
+    Left = 475
+    Top = 53
   end
 end

@@ -1,10 +1,28 @@
-unit frmOptions;
+(*
+ *  This file is part of Thundax P-Zaggy
+ *
+ *  Thundax P-Zaggy is a free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Thundax P-Zaggy is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with VLO Framework.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *  Copyright     2008,2010     Jordi Coll Corbilla
+ *)
+ unit frmOptions;
 
 interface
 
 uses
     Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-    Dialogs, StdCtrls, Spin, uOptions, ExtCtrls;
+    Dialogs, StdCtrls, Spin, uOptions, ExtCtrls, Buttons;
 
 type
     TfOptions = class(TForm)
@@ -13,8 +31,6 @@ type
         CheckBox2: TCheckBox;
         Label1: TLabel;
         spnPrecision: TSpinEdit;
-        Button1: TButton;
-        Button2: TButton;
         Label2: TLabel;
         Label3: TLabel;
         spnGridSize: TSpinEdit;
@@ -23,16 +39,24 @@ type
         cbGridColor: TColorBox;
         Label5: TLabel;
         Label6: TLabel;
+        chkRewrite: TCheckBox;
+        Label7: TLabel;
+        cbBackProp: TColorBox;
+        Label8: TLabel;
+        cbSelection: TColorBox;
+    SpeedButton3: TSpeedButton;
+    SpeedButton4: TSpeedButton;
         procedure Button1Click(Sender: TObject);
         procedure FormShow(Sender: TObject);
         procedure Button2Click(Sender: TObject);
     private
         { Private declarations }
     public
-        option: TOptionsApplication end;
+        option: TOptionsApplication;
+    end;
 
-    var
-        fOptions: TfOptions;
+var
+    fOptions: TfOptions;
 
 implementation
 
@@ -48,6 +72,9 @@ begin
         option.gridSize := spnGridSize.Value;
         option.BackGroundColor := cbBackColor.Selected;
         option.GridColor := cbGridColor.Selected;
+        option.RewriteOnFilling := chkRewrite.Checked;
+        option.BackGroundProperties := cbBackProp.Selected;
+        option.SelectionColorMark := cbSelection.Selected;
         option.SaveToFile;
         close;
     end;
@@ -68,6 +95,9 @@ begin
         spnGridSize.Value := option.gridSize;
         cbBackColor.Selected := option.BackGroundColor;
         cbGridColor.Selected := option.GridColor;
+        chkRewrite.Checked := option.RewriteOnFilling;
+        cbBackProp.Selected := option.BackGroundProperties;
+        cbSelection.Selected := option.SelectionColorMark;
     end;
 end;
 

@@ -1,10 +1,10 @@
-object frmDefault: TfrmDefault
+object frmSelectProperties: TfrmSelectProperties
   Left = 0
   Top = 0
-  BorderStyle = bsToolWindow
-  Caption = 'Default node and edge properties'
-  ClientHeight = 347
-  ClientWidth = 390
+  BorderStyle = bsSizeToolWin
+  Caption = 'Default selected properties'
+  ClientHeight = 382
+  ClientWidth = 391
   Color = clWhite
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,114 +17,108 @@ object frmDefault: TfrmDefault
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
+  object Image2: TImage
+    Left = 0
+    Top = 0
+    Width = 17
+    Height = 382
+    Align = alLeft
+    ExplicitTop = 32
+    ExplicitHeight = 306
+  end
+  object imgBox: TImage
+    Left = 19
+    Top = 1
+    Width = 367
+    Height = 166
+  end
   object Label6: TLabel
-    Left = 20
-    Top = 133
+    Left = 23
+    Top = 173
     Width = 51
     Height = 13
     Caption = 'Pen width:'
   end
   object Label2: TLabel
-    Left = 20
-    Top = 156
+    Left = 22
+    Top = 196
     Width = 50
     Height = 13
     Caption = 'Box Color:'
   end
   object Label3: TLabel
-    Left = 20
-    Top = 180
+    Left = 22
+    Top = 220
     Width = 51
     Height = 13
     Caption = 'Line Color:'
   end
   object Label4: TLabel
-    Left = 20
-    Top = 204
+    Left = 22
+    Top = 244
     Width = 73
     Height = 13
     Caption = 'Selected Color:'
   end
-  object imgBox: TImage
-    Left = 20
-    Top = 3
-    Width = 175
-    Height = 121
-  end
   object Label1: TLabel
-    Left = 209
-    Top = 134
+    Left = 211
+    Top = 174
     Width = 69
     Height = 13
     Caption = 'Arrow Length:'
   end
   object Label5: TLabel
-    Left = 209
-    Top = 156
+    Left = 211
+    Top = 196
     Width = 51
     Height = 13
     Caption = 'Pen width:'
   end
   object Label7: TLabel
-    Left = 209
-    Top = 179
+    Left = 211
+    Top = 219
     Width = 63
     Height = 13
     Caption = 'Arrow Angle:'
   end
   object Label8: TLabel
-    Left = 209
-    Top = 203
+    Left = 211
+    Top = 243
     Width = 51
     Height = 13
     Caption = 'Line Color:'
   end
   object Label9: TLabel
-    Left = 209
-    Top = 275
+    Left = 211
+    Top = 310
     Width = 44
     Height = 13
     Caption = 'Fill Color:'
   end
   object Label10: TLabel
-    Left = 209
-    Top = 299
+    Left = 211
+    Top = 334
     Width = 73
     Height = 13
     Caption = 'Selected Color:'
   end
-  object imgLine: TImage
-    Left = 208
-    Top = 3
-    Width = 179
-    Height = 121
-  end
-  object Image2: TImage
-    Left = 0
-    Top = 0
-    Width = 17
-    Height = 347
-    Align = alLeft
-    ExplicitTop = 32
-    ExplicitHeight = 306
-  end
   object Label13: TLabel
-    Left = 20
-    Top = 251
+    Left = 23
+    Top = 290
     Width = 26
     Height = 13
     Caption = 'Font:'
   end
   object Label11: TLabel
-    Left = 209
-    Top = 228
+    Left = 212
+    Top = 266
     Width = 26
     Height = 13
     Caption = 'Font:'
   end
   object SpeedButton3: TSpeedButton
-    Left = 208
-    Top = 322
+    Left = 211
+    Top = 357
     Width = 84
     Height = 22
     Caption = 'Save'
@@ -158,8 +152,8 @@ object frmDefault: TfrmDefault
     OnClick = Button1Click
   end
   object SpeedButton4: TSpeedButton
-    Left = 299
-    Top = 322
+    Left = 302
+    Top = 357
     Width = 86
     Height = 22
     Caption = 'Cancel'
@@ -193,8 +187,8 @@ object frmDefault: TfrmDefault
     OnClick = Button2Click
   end
   object Label19: TLabel
-    Left = 20
-    Top = 227
+    Left = 22
+    Top = 267
     Width = 71
     Height = 13
     Caption = 'Color if Image:'
@@ -206,19 +200,19 @@ object frmDefault: TfrmDefault
     ParentFont = False
   end
   object penWidth: TSpinEdit
-    Left = 98
-    Top = 130
+    Left = 101
+    Top = 170
     Width = 97
     Height = 22
     MaxValue = 10
     MinValue = 1
     TabOrder = 0
     Value = 1
-    OnChange = penWidthChange
+    OnChange = spPenWidthChange
   end
   object cbBoxColor: TColorBox
-    Left = 98
-    Top = 153
+    Left = 101
+    Top = 193
     Width = 97
     Height = 22
     Style = [cbStandardColors, cbExtendedColors, cbCustomColor, cbCustomColors]
@@ -226,8 +220,8 @@ object frmDefault: TfrmDefault
     OnChange = cbBoxColorChange
   end
   object cbLineColor: TColorBox
-    Left = 98
-    Top = 177
+    Left = 101
+    Top = 217
     Width = 97
     Height = 22
     Style = [cbStandardColors, cbExtendedColors, cbCustomColor, cbCustomColors]
@@ -235,8 +229,8 @@ object frmDefault: TfrmDefault
     OnChange = cbBoxColorChange
   end
   object cbSelectedColor: TColorBox
-    Left = 98
-    Top = 201
+    Left = 101
+    Top = 241
     Width = 97
     Height = 22
     Style = [cbStandardColors, cbExtendedColors, cbCustomColor, cbCustomColors]
@@ -244,41 +238,41 @@ object frmDefault: TfrmDefault
     OnChange = cbBoxColorChange
   end
   object spArrowLength: TSpinEdit
-    Left = 287
-    Top = 130
+    Left = 290
+    Top = 170
     Width = 100
     Height = 22
     MaxValue = 0
     MinValue = 0
     TabOrder = 7
     Value = 0
-    OnChange = penWidthChange
+    OnChange = spPenWidthChange
   end
   object spPenWidth: TSpinEdit
-    Left = 287
-    Top = 153
+    Left = 290
+    Top = 193
     Width = 100
     Height = 22
     MaxValue = 10
     MinValue = 1
     TabOrder = 8
     Value = 1
-    OnChange = penWidthChange
+    OnChange = spPenWidthChange
   end
   object arrowAngle: TSpinEdit
-    Left = 287
-    Top = 176
+    Left = 290
+    Top = 216
     Width = 100
     Height = 22
     MaxValue = 50
     MinValue = 10
     TabOrder = 9
     Value = 10
-    OnChange = penWidthChange
+    OnChange = spPenWidthChange
   end
   object ColorBox1: TColorBox
-    Left = 287
-    Top = 200
+    Left = 290
+    Top = 240
     Width = 100
     Height = 22
     Style = [cbStandardColors, cbExtendedColors, cbCustomColor, cbCustomColors]
@@ -286,8 +280,8 @@ object frmDefault: TfrmDefault
     OnChange = cbBoxColorChange
   end
   object chkFilled: TCheckBox
-    Left = 209
-    Top = 251
+    Left = 211
+    Top = 286
     Width = 97
     Height = 17
     Caption = 'Filled'
@@ -295,8 +289,8 @@ object frmDefault: TfrmDefault
     OnClick = chkFilledClick
   end
   object cbFillColor: TColorBox
-    Left = 287
-    Top = 272
+    Left = 290
+    Top = 307
     Width = 100
     Height = 22
     Style = [cbStandardColors, cbExtendedColors, cbCustomColor, cbCustomColors]
@@ -304,8 +298,8 @@ object frmDefault: TfrmDefault
     OnChange = cbBoxColorChange
   end
   object ColorBox2: TColorBox
-    Left = 287
-    Top = 296
+    Left = 290
+    Top = 331
     Width = 100
     Height = 22
     Style = [cbStandardColors, cbExtendedColors, cbCustomColor, cbCustomColors]
@@ -313,8 +307,8 @@ object frmDefault: TfrmDefault
     OnChange = cbBoxColorChange
   end
   object edFont1: TEdit
-    Left = 98
-    Top = 248
+    Left = 101
+    Top = 287
     Width = 97
     Height = 21
     Color = clSilver
@@ -323,8 +317,8 @@ object frmDefault: TfrmDefault
     Text = 'edFont1'
   end
   object Button3: TButton
-    Left = 175
-    Top = 250
+    Left = 178
+    Top = 289
     Width = 18
     Height = 18
     Caption = '...'
@@ -332,8 +326,8 @@ object frmDefault: TfrmDefault
     OnClick = Button3Click
   end
   object edFont2: TEdit
-    Left = 287
-    Top = 225
+    Left = 290
+    Top = 263
     Width = 100
     Height = 21
     Color = clSilver
@@ -342,8 +336,8 @@ object frmDefault: TfrmDefault
     Text = 'edFont1'
   end
   object Button4: TButton
-    Left = 367
-    Top = 227
+    Left = 370
+    Top = 265
     Width = 18
     Height = 18
     Caption = '...'
@@ -351,9 +345,9 @@ object frmDefault: TfrmDefault
     OnClick = Button4Click
   end
   object cbColorIfImage: TColorBox
-    Left = 98
-    Top = 224
-    Width = 96
+    Left = 101
+    Top = 264
+    Width = 97
     Height = 22
     Style = [cbStandardColors, cbExtendedColors, cbCustomColor, cbCustomColors]
     TabOrder = 4

@@ -1,10 +1,28 @@
-unit defaultProperties;
+(*
+ *  This file is part of Thundax P-Zaggy
+ *
+ *  Thundax P-Zaggy is a free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Thundax P-Zaggy is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with VLO Framework.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *  Copyright     2008,2010     Jordi Coll Corbilla
+ *)
+ unit defaultProperties;
 
 interface
 
 uses
     Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-    Dialogs, StdCtrls, Buttons, ExtCtrls, Spin, inifiles, uProperties;
+    Dialogs, StdCtrls, Buttons, ExtCtrls, Spin, inifiles, uProperties, uOptions;
 
 type
     TfrmDefault = class(TForm)
@@ -17,7 +35,6 @@ type
         Label4: TLabel;
         cbSelectedColor: TColorBox;
         imgBox: TImage;
-        Button1: TButton;
         Label1: TLabel;
         spArrowLength: TSpinEdit;
         Label5: TLabel;
@@ -32,15 +49,31 @@ type
         Label10: TLabel;
         ColorBox2: TColorBox;
         imgLine: TImage;
-        Button2: TButton;
         Image2: TImage;
+        Label13: TLabel;
+        edFont1: TEdit;
+        Button3: TButton;
+        Label11: TLabel;
+        edFont2: TEdit;
+        Button4: TButton;
+        FontDialog1: TFontDialog;
+        SpeedButton3: TSpeedButton;
+        SpeedButton4: TSpeedButton;
+        Label19: TLabel;
+        cbColorIfImage: TColorBox;
         procedure FormCreate(Sender: TObject);
         procedure Button1Click(Sender: TObject);
         procedure Button2Click(Sender: TObject);
         procedure penWidthChange(Sender: TObject);
         procedure cbBoxColorChange(Sender: TObject);
         procedure chkFilledClick(Sender: TObject);
+        procedure FormShow(Sender: TObject);
+        procedure Button3Click(Sender: TObject);
+        procedure Button4Click(Sender: TObject);
+        procedure FormDestroy(Sender: TObject);
     private
+        textFont1: TFont;
+        textFont2: TFont;
         procedure GetSettings;
         procedure SaveSettings;
         procedure drawRectangle;
@@ -48,8 +81,9 @@ type
         procedure DrawFashionArrow(Source, Target: TPoint; inside: boolean);
         { Private declarations }
     public
-        DefaultLineProperty: TEdgeProperty;
-        DefaultBoxProperty: TNodeProperty;
+        DefaultEdgeProperty: TEdgeProperty;
+        DefaultNodeProperty: TNodeProperty;
+        option: TOptionsApplication;
     end;
 
 var
@@ -58,7 +92,7 @@ var
 implementation
 
 uses
-    uText, uMath, Math;
+    uText, uMath, Math, uIniProperties, uFonts;
 {$R *.dfm}
 
 procedure TfrmDefault.Button1Click(Sender: TObject);
@@ -79,9 +113,30 @@ begin
     ft.Size := 12;
     ft.Style := ft.Style + [fsBold];
     sizeText := Image2.Canvas.textWidth('Default Properties');
-    DrawTextOrientation(Image2.Canvas, Point(1, 170 + (sizeText div 2)), 90, ft, 'Default Properties');
+    DrawTextOrientation(Image2.Canvas, Point(1, 170 + (sizeText div 2)), 90, ft, 'Default Properties', False, clwhite);
     ft.free;
+
+    textFont1 := TFont.Create;
+    textFont1.Name := 'Calibri';
+    textFont1.Size := 12;
+    textFont2 := TFont.Create;
+    textFont2.Name := 'Calibri';
+    textFont2.Size := 12;
+
     GetSettings;
+end;
+
+procedure TfrmDefault.FormDestroy(Sender: TObject);
+begin
+    textFont1.free;
+    textFont2.free;
+end;
+
+procedure TfrmDefault.FormShow(Sender: TObject);
+begin
+    GetSettings();
+    AssignEditFont(edFont1, DefaultNodeProperty.fontText);
+    AssignEditFont(edFont2, DefaultEdgeProperty.fontText);
 end;
 
 procedure TfrmDefault.GetSettings;
@@ -94,6 +149,13 @@ begin
         cbBoxColor.Selected := StrToInt(ini.ReadString('NODE', 'BoxColor', '16777215'));
         cbLineColor.Selected := StrToInt(ini.ReadString('NODE', 'LineColor', '0'));
         cbSelectedColor.Selected := StrToInt(ini.ReadString('NODE', 'SelectedColor', '255'));
+        cbColorIfImage.Selected := StrToInt(ini.ReadString('NODE', 'ColorifImage', '255'));
+
+        if Assigned(DefaultNodeProperty) then
+        begin
+            FontDeserializer(ini, 'NODE', DefaultNodeProperty);
+            AssignFont(textFont1, DefaultNodeProperty.fontText);
+        end;
 
         spArrowLength.Value := StrToInt(ini.ReadString('EDGE', 'ArrowLength', '12'));
         spPenWidth.Value := StrToInt(ini.ReadString('EDGE', 'PenWidth', '1'));
@@ -102,6 +164,11 @@ begin
         chkFilled.Checked := StrToBool(ini.ReadString('EDGE', 'Filled', '0'));
         cbFillColor.Selected := StrToInt(ini.ReadString('EDGE', 'FillColor', '0'));
         ColorBox2.Selected := StrToInt(ini.ReadString('EDGE', 'SelectedColor', '255'));
+        if Assigned(DefaultEdgeProperty) then
+        begin
+            FontDeserializer(ini, 'EDGE', DefaultEdgeProperty);
+            AssignFont(textFont2, DefaultEdgeProperty.fontText);
+        end;
         Draw();
     finally
         ini.free;
@@ -124,13 +191,17 @@ begin
         ini.WriteString('NODE', 'BoxColor', InttoStr(cbBoxColor.Selected));
         ini.WriteString('NODE', 'LineColor', InttoStr(cbLineColor.Selected));
         ini.WriteString('NODE', 'SelectedColor', InttoStr(cbSelectedColor.Selected));
+        ini.WriteString('NODE', 'ColorifImage', InttoStr(cbColorIfImage.Selected));
 
-        if Assigned(DefaultBoxProperty) then
+        if Assigned(DefaultNodeProperty) then
         begin
-            DefaultBoxProperty.penWidth := penWidth.Value;
-            DefaultBoxProperty.FillColor := cbBoxColor.Selected;
-            DefaultBoxProperty.LineColor := cbLineColor.Selected;
-            DefaultBoxProperty.SelectedColor := cbSelectedColor.Selected;
+            DefaultNodeProperty.penWidth := penWidth.Value;
+            DefaultNodeProperty.FillColor := cbBoxColor.Selected;
+            DefaultNodeProperty.LineColor := cbLineColor.Selected;
+            DefaultNodeProperty.SelectedColor := cbSelectedColor.Selected;
+            DefaultNodeProperty.ColorifImage := cbColorIfImage.Selected;
+            DefaultNodeProperty.AssignText(textFont1);
+            FontSerializer(ini, 'NODE', DefaultNodeProperty.fontText);
         end;
 
         ini.WriteString('EDGE', 'ArrowLength', InttoStr(spArrowLength.Value));
@@ -141,15 +212,17 @@ begin
         ini.WriteString('EDGE', 'FillColor', InttoStr(cbFillColor.Selected));
         ini.WriteString('EDGE', 'SelectedColor', InttoStr(ColorBox2.Selected));
 
-        if Assigned(DefaultLineProperty) then
+        if Assigned(DefaultEdgeProperty) then
         begin
-            DefaultLineProperty.LenArrow := spArrowLength.Value;
-            DefaultLineProperty.penWidth := spPenWidth.Value;
-            DefaultLineProperty.InclinationAngle := arrowAngle.Value;
-            DefaultLineProperty.LineColor := ColorBox1.Selected;
-            DefaultLineProperty.Filled := chkFilled.Checked;
-            DefaultLineProperty.FillColor := cbFillColor.Selected;
-            DefaultLineProperty.SelectedColor := ColorBox2.Selected;
+            DefaultEdgeProperty.LenArrow := spArrowLength.Value;
+            DefaultEdgeProperty.penWidth := spPenWidth.Value;
+            DefaultEdgeProperty.InclinationAngle := arrowAngle.Value;
+            DefaultEdgeProperty.LineColor := ColorBox1.Selected;
+            DefaultEdgeProperty.Filled := chkFilled.Checked;
+            DefaultEdgeProperty.FillColor := cbFillColor.Selected;
+            DefaultEdgeProperty.SelectedColor := ColorBox2.Selected;
+            DefaultEdgeProperty.AssignText(textFont2);
+            FontSerializer(ini, 'EDGE', DefaultEdgeProperty.fontText);
         end;
 
     finally
@@ -160,6 +233,30 @@ end;
 procedure TfrmDefault.Button2Click(Sender: TObject);
 begin
     Close;
+end;
+
+procedure TfrmDefault.Button3Click(Sender: TObject);
+begin
+    AssignDialogFont(FontDialog1, DefaultNodeProperty.fontText);
+    with FontDialog1 do
+        if Execute then
+        begin
+            AssignFont(textFont1, Font);
+            AssignEditFont(edFont1, textFont1);
+            Draw();
+        end;
+end;
+
+procedure TfrmDefault.Button4Click(Sender: TObject);
+begin
+    AssignDialogFont(FontDialog1, DefaultEdgeProperty.fontText);
+    with FontDialog1 do
+        if Execute then
+        begin
+            AssignFont(textFont2, Font);
+            AssignEditFont(edFont2, textFont2);
+            Draw();
+        end;
 end;
 
 procedure TfrmDefault.cbBoxColorChange(Sender: TObject);
@@ -174,33 +271,38 @@ end;
 
 procedure TfrmDefault.drawRectangle();
 begin
-    imgBox.Canvas.Brush.Style := bsSolid;
-    imgBox.Canvas.Brush.color := clwhite;
-    imgBox.Canvas.Pen.width := 2;
-    imgBox.Canvas.Pen.color := clBlack;
-    imgBox.Canvas.Rectangle(0, 0, imgBox.width, imgBox.height);
+    if Assigned(option) then
+    begin
+        imgBox.Canvas.Brush.Style := bsSolid;
+        imgBox.Canvas.Brush.Color := option.BackGroundProperties;
+        imgBox.Canvas.Pen.width := 2;
+        imgBox.Canvas.Pen.Color := clBlack;
+        imgBox.Canvas.Rectangle(0, 0, imgBox.width, imgBox.height);
 
-    imgLine.Canvas.Brush.Style := bsSolid;
-    imgLine.Canvas.Brush.color := clwhite;
-    imgLine.Canvas.Pen.width := 2;
-    imgLine.Canvas.Pen.color := clBlack;
-    imgLine.Canvas.Rectangle(0, 0, imgLine.width, imgLine.height);
+        imgLine.Canvas.Brush.Style := bsSolid;
+        imgLine.Canvas.Brush.Color := option.BackGroundProperties;
+        imgLine.Canvas.Pen.width := 2;
+        imgLine.Canvas.Pen.Color := clBlack;
+        imgLine.Canvas.Rectangle(0, 0, imgLine.width, imgLine.height);
+    end;
 end;
 
 procedure TfrmDefault.Draw();
 begin
     drawRectangle();
     imgBox.Canvas.Brush.Style := bsSolid;
-    imgBox.Canvas.Brush.color := cbBoxColor.Selected;
+    imgBox.Canvas.Brush.Color := cbBoxColor.Selected;
     imgBox.Canvas.Pen.width := penWidth.Value;
-    imgBox.Canvas.Brush.color := cbBoxColor.Selected;
-    imgBox.Canvas.Pen.color := cbLineColor.Selected;
+    imgBox.Canvas.Brush.Color := cbBoxColor.Selected;
+    imgBox.Canvas.Pen.Color := cbLineColor.Selected;
     imgBox.Canvas.Rectangle(40, 20, 90, 70);
-    imgBox.Canvas.Pen.color := cbSelectedColor.Selected;
+    imgBox.Canvas.Pen.Color := cbSelectedColor.Selected;
     imgBox.Canvas.Rectangle(75, 55, 125, 105);
+    DrawTextOrientation(imgBox.Canvas, Point(40 + 2, 20 + 1), 0, textFont1, '1', False, clwhite);
 
-    DrawFashionArrow(Point(10, 30), Point(160, 30), false);
+    DrawFashionArrow(Point(10, 30), Point(160, 30), False);
     DrawFashionArrow(Point(10, 70), Point(160, 70), true);
+    DrawTextOrientation(imgLine.Canvas, Point(30, 10), 0, textFont2, '1', False, clwhite);
 end;
 
 procedure TfrmDefault.DrawFashionArrow(Source, Target: TPoint; inside: boolean);
@@ -238,17 +340,17 @@ begin
 
     imgLine.Canvas.Pen.width := spPenWidth.Value;
     if inside then
-        imgLine.Canvas.Pen.color := ColorBox2.Selected
+        imgLine.Canvas.Pen.Color := ColorBox2.Selected
     else
-        imgLine.Canvas.Pen.color := ColorBox1.Selected;
+        imgLine.Canvas.Pen.Color := ColorBox1.Selected;
     imgLine.Canvas.Brush.Style := bsSolid;
-    restColor := imgLine.Canvas.Brush.color;
+    restColor := imgLine.Canvas.Brush.Color;
     if chkFilled.Checked then
-        imgLine.Canvas.Brush.color := cbFillColor.Selected;
+        imgLine.Canvas.Brush.Color := cbFillColor.Selected;
     imgLine.Canvas.MoveTo(Source.X, Source.Y);
     imgLine.Canvas.LineTo(Target.X, Target.Y);
     imgLine.Canvas.Polygon(PArrow);
-    imgLine.Canvas.Brush.color := restColor;
+    imgLine.Canvas.Brush.Color := restColor;
 end;
 
 end.
